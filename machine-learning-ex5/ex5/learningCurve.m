@@ -54,7 +54,30 @@ error_val   = zeros(m, 1);
 % ---------------------- Sample Solution ----------------------
 
 
+for i = 1:m
 
+%extract training subset
+
+X_train = X(1:i,:);
+y_train = y(1:i,:);
+
+%training for each subset
+
+[theta] = trainLinearReg(X_train, y_train, lambda)
+
+% Compute train/cross validation errors using training examples 
+
+% computing the resulting prediction for current training subset  
+h_x_train = X_train*theta;
+h_x_val = Xval*theta;
+
+%compute training error 
+error_train(i) = (1/(2*i)).*sum((h_x_train-y_train).^2);
+
+%compute validation error 
+error_val(i) = (1/(2*m)).*sum((h_x_val-yval).^2);
+
+end
 
 
 

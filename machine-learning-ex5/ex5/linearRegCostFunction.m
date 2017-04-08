@@ -19,19 +19,24 @@ grad = zeros(size(theta));
 %               You should set J to the cost and grad to the gradient.
 %
 
+%calc hypothesis func
+h_x = X*theta;
 
+%remove the theta_0 from theta set (zero weight is bias)
+theta = theta(2:end);
 
+%CF implemention
+J = (1/(2*m)).*sum((h_x-y).^2) + (lambda/(2*m))*sum(theta.^2);
 
+%gradient for the bias weight w/o regularization
+grad_0 = (1/m)*X(:,1)'*(h_x-y);
 
+%regularization applied to the remaining weights
+grad = (1/m)*(X(:,2:end)'*(h_x-y))+(lambda/m).*theta;
 
-
-
-
-
-
+%putting the gradients together
+grad = [grad_0; grad];
 
 % =========================================================================
-
-grad = grad(:);
 
 end
